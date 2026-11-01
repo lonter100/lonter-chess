@@ -17,15 +17,14 @@ These binaries are completely self-contained. They require **zero external depen
 
 ---
 
-## Size Comparison
+## Size & Independence
 
-| Variant | Size | Standalone? | External Dependencies |
+| Executable | Binary Size | Standalone? | External Dependencies |
 | :--- | :--- | :--- | :--- |
-| **`bin/toledo` (Sub-1KB ELF)** | **952 B** | **Yes (100%)** | **None (Direct Syscalls)** |
-| **`bin/micromax` (Sub-1KB ELF)** | **952 B** | **Yes (100%)** | **None (Direct Syscalls)** |
-| `toledo_ultra.hnib` (Polyglot) | 186 B | No | Needs launcher / AVM |
-| Original C compiled dynamic (`gcc -Os`) | 15 KB | No | Requires `libc.so.6` |
-| Original C compiled static (`gcc -static -Os`) | 695 KB | Yes | Huge libc bundle (730x larger) |
+| **`bin/toledo`** | **952 bytes** | **Yes (100%)** | **None (Pure direct kernel syscalls)** |
+| **`bin/micromax`** | **952 bytes** | **Yes (100%)** | **None (Pure direct kernel syscalls)** |
+
+*For comparison: Compiling the original C source as a standalone static binary with `gcc -static -Os` produces a 695 KB executable (over 730 times larger) due to the bundled C runtime.*
 
 ---
 

@@ -103,7 +103,7 @@ make test
 
 - **Toledo Nanochess**: Created by Oscar Toledo G. ([nanochess.org](https://nanochess.org/))
 - **MicroMax Chess**: Created by H.G. Muller ([home.hccnet.nl/h.g.muller](https://home.hccnet.nl/h.g.muller/))
-- **Sub-1KB Architecture & Synthesis**: Developed as part of the H-Lang Sovereign Computing Project.
+- **lonter** -- Sub-1KB Architecture & Synthesis: Developed as part of the H-Lang Sovereign Computing Project.
 
 ---
 

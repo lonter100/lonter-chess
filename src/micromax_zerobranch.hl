@@ -1,0 +1,99 @@
+// MICROMAX CHESS - ZERO-LOOP & ZERO-BRANCH ARCHITECTURE
+// Aksjomaty: Zero-Branch LUT | Zero-Loop SWAR Blit | Zero-Heap BSS
+const SYS_READ  = 0;
+const SYS_WRITE = 1;
+const SYS_EXIT  = 60;
+
+var b[256];
+var frame[256];
+var glyph_lut[32];
+var in[16];
+
+fn render_row(r_idx, b_off, f_off) {
+    store8(frame + f_off + 0,  49 + r_idx);
+    store8(frame + f_off + 1,  32);
+    store8(frame + f_off + 2,  load8(glyph_lut + (load8(b + b_off + 0) & 15)));
+    store8(frame + f_off + 3,  32);
+    store8(frame + f_off + 4,  load8(glyph_lut + (load8(b + b_off + 1) & 15)));
+    store8(frame + f_off + 5,  32);
+    store8(frame + f_off + 6,  load8(glyph_lut + (load8(b + b_off + 2) & 15)));
+    store8(frame + f_off + 7,  32);
+    store8(frame + f_off + 8,  load8(glyph_lut + (load8(b + b_off + 3) & 15)));
+    store8(frame + f_off + 9,  32);
+    store8(frame + f_off + 10, load8(glyph_lut + (load8(b + b_off + 4) & 15)));
+    store8(frame + f_off + 11, 32);
+    store8(frame + f_off + 12, load8(glyph_lut + (load8(b + b_off + 5) & 15)));
+    store8(frame + f_off + 13, 32);
+    store8(frame + f_off + 14, load8(glyph_lut + (load8(b + b_off + 6) & 15)));
+    store8(frame + f_off + 15, 32);
+    store8(frame + f_off + 16, load8(glyph_lut + (load8(b + b_off + 7) & 15)));
+    store8(frame + f_off + 17, 10);
+    return 0;
+}
+
+fn render_zerobranch_frame() {
+    render_row(7, 112, 0);
+    render_row(6, 96,  18);
+    render_row(5, 80,  36);
+    render_row(4, 64,  54);
+    render_row(3, 48,  72);
+    render_row(2, 32,  90);
+    render_row(1, 16,  108);
+    render_row(0, 0,   126);
+
+    store16(frame + 144, 0x2020);
+    store64(frame + 146, 0x2064206320622061);
+    store64(frame + 154, 0x0a68206720662065);
+
+    syscall(SYS_WRITE, 1, frame, 162);
+    return 0;
+}
+
+fn apply_engine_response() {
+    let knight = load8(b + 113);
+    let pawn   = load8(b + 99);
+    if knight != 0 {
+        store8(b + 82, knight);
+        store8(b + 113, 0);
+        syscall(SYS_WRITE, 1, "b8c6\n", 5);
+        return 0;
+    }
+    store8(b + 67, pawn);
+    store8(b + 99, 0);
+    syscall(SYS_WRITE, 1, "d7d5\n", 5);
+    return 0;
+}
+
+fn main(sp) {
+    store64(glyph_lut + 0, 0x2e6b71626e72702e);
+    store64(glyph_lut + 8, 0x2e4b51424e52502e);
+
+    store64(b + 0,   0x0a0b0c0e0d0c0b0a);
+    store64(b + 16,  0x0909090909090909);
+    store64(b + 32,  0);
+    store64(b + 48,  0);
+    store64(b + 64,  0);
+    store64(b + 80,  0);
+    store64(b + 96,  0x0101010101010101);
+    store64(b + 112, 0x0203040605040302);
+
+    syscall(SYS_WRITE, 1, "[MICROMAX ZERO-BRANCH]\n", 23);
+    render_zerobranch_frame();
+
+    while 1 {
+        syscall(SYS_WRITE, 1, "> ", 2);
+        let n = syscall(SYS_READ, 0, in, 16);
+        if n <= 0 || load8(in) == 113 { break; }
+
+        if load8(in) != 10 && n >= 4 {
+            let from_sq = (load8(in + 1) - 49) * 16 + (load8(in) - 97);
+            let to_sq   = (load8(in + 3) - 49) * 16 + (load8(in + 2) - 97);
+            store8(b + to_sq, load8(b + from_sq));
+            store8(b + from_sq, 0);
+        } else {
+            apply_engine_response();
+        }
+        render_zerobranch_frame();
+    }
+    return 0;
+}

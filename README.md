@@ -1,4 +1,4 @@
-# Sub-1KB Chess: Self-Contained Chess Engines for Linux (< 1 KB)
+# Lonter Chess: Sub-1KB Standalone Linux Chess Engine (< 1 KB)
 
 A collection of ultra-compact, fully playable chess engines compiled down to **sub-1KB standalone Linux x86_64 ELF binaries (952 bytes)**.
 
@@ -34,8 +34,8 @@ These binaries are completely self-contained. They require **zero external depen
 No installation or root privileges required:
 ```bash
 # Clone the repository
-git clone https://github.com/lonter100/sub1k-chess.git
-cd sub1k-chess
+git clone https://github.com/lonter100/lonter-chess.git
+cd lonter-chess
 
 # Run either engine directly
 chmod +x bin/toledo
@@ -92,7 +92,7 @@ To shrink the entire playable chess engine below 1 KB:
 
 - **Toledo Nanochess**: Created by Oscar Toledo G. ([nanochess.org](https://nanochess.org/))
 - **MicroMax Chess**: Created by H.G. Muller ([home.hccnet.nl/h.g.muller](https://home.hccnet.nl/h.g.muller/))
-- **lonter Sovereign Computing Project.**
+- **Lonter Sovereign Computing Project.**
 
 ---
 

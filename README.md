@@ -88,22 +88,11 @@ To shrink the entire playable chess engine below 1 KB:
 
 ---
 
-## Building from Source
-
-You can build the binaries using standard GNU assembler and linker:
-```bash
-make clean
-make all
-make test
-```
-
----
-
 ## Credits & References
 
 - **Toledo Nanochess**: Created by Oscar Toledo G. ([nanochess.org](https://nanochess.org/))
 - **MicroMax Chess**: Created by H.G. Muller ([home.hccnet.nl/h.g.muller](https://home.hccnet.nl/h.g.muller/))
-- **lonter** -- Sub-1KB Architecture & Synthesis: Developed as part of the H-Lang Sovereign Computing Project.
+- **lonter Sovereign Computing Project.**
 
 ---
 
